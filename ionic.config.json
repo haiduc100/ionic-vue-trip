@@ -1,0 +1,7 @@
+{
+  "name": "hybirdApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
