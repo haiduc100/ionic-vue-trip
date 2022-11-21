@@ -18,6 +18,11 @@ export async function getTripById(id: number) {
   const db = await openDB(DATABASE_NAME, 1);
   return await db.get("trips", id);
 }
+export async function deleteTrip(id: number) {
+  const db = await openDB(DATABASE_NAME, 1);
+  await db.delete("trips", id);
+  return;
+}
 export async function updateTrip(TripInfo: ITrip) {
   const db = await openDB(DATABASE_NAME, 1);
   const oldTrip = (await db.get("trips", TripInfo.id)) as ITrip;

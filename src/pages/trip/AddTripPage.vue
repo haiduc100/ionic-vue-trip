@@ -16,7 +16,8 @@ export default {
     async saveTrip(tripData) {
       await insertTrip(tripData);
       alert("Create trip successfully");
-      this.$router.replace("/trips");
+      await this.$router.replace("/trips");
+      window.location.reload();
     },
   },
 };

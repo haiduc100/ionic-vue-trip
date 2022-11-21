@@ -4,6 +4,9 @@
       <ion-buttons router-link="/trips/add">
         <ion-icon :icon="add"></ion-icon>
       </ion-buttons>
+      <ion-buttons>
+        <ion-icon :icon="closeCircle" @click="reset"></ion-icon>
+      </ion-buttons>
     </template>
     <ion-searchbar
       :debounce="1000"
@@ -15,14 +18,15 @@
 
 <script>
 import { IonButtons, IonIcon, IonSearchbar } from "@ionic/vue";
-import { add } from "ionicons/icons";
+import { add, closeCircle } from "ionicons/icons";
 import ListTrip from "../../components/trip/ListTrip.vue";
-import { getAllTrip } from "../../../databaseHandler";
+import { getAllTrip, deleteTrip } from "../../../databaseHandler";
 export default {
   components: { IonButtons, IonIcon, ListTrip, IonSearchbar },
 
   data() {
     return {
+      closeCircle,
       add,
       trips: [],
       defaultTrips: [],
@@ -32,6 +36,18 @@ export default {
     await this.getTrips();
   },
   methods: {
+    async reset() {
+      let list = await getAllTrip();
+      if (list.length == 0) {
+        alert("Nothing to delete");
+        return;
+      }
+      for (let i = 0; i < list.length; i++) {
+        await deleteTrip(list[i].id);
+      }
+      alert("Deleted all trips successfully");
+      window.location.reload();
+    },
     async getTrips() {
       const data = await getAllTrip();
       this.trips = data;
